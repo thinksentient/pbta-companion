@@ -1,0 +1,243 @@
+@import "~antd/dist/antd.css";
+@import url("https://fonts.googleapis.com/css?family=Gloria+Hallelujah|Roboto&display=swap");
+
+$bodyFont: Roboto, sans-serif;
+// $headerFont:  Pacifico, serif;
+$headerFont: "Gloria Hallelujah", serif;
+
+body {
+  font-family: $bodyFont;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: $headerFont;
+}
+
+h1 {
+  font-size: 1.5rem;
+}
+h2 {
+  font-size: 1.75em;
+}
+h3 {
+  text-align: center;
+  font-weight: normal;
+  padding: inherit 1em;
+  font-size: 1.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &::before {
+    content: "\1F65E";
+    display: block;
+    padding: 0 0.5em;
+    font-size: 1.5em;
+  }
+  &::after {
+    content: "\1F65C";
+    display: block;
+    padding: 0 0.5em;
+    font-size: 1.5em;
+  }
+  span > span {
+    display: block;
+    font-size: 0.5em;
+    border-top: 1px solid #ccc;
+    font-family: $bodyFont;
+    text-transform: uppercase;
+    line-height: 2.3em;
+  }
+}
+
+.textCenter {
+  text-align: center;
+}
+
+.ant-card-head {
+	padding: 0 1rem;
+}
+.ant-card-body {
+	padding: 1rem;
+}
+
+.ant-layout-header {
+  height: auto;
+  line-height: 1;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  display: flex;
+
+  > div {
+    line-height: 1.5rem;
+    color: #fff;
+  }
+  a {
+	display: block;
+	padding: 0.5rem;
+	border-radius: 15px;
+	text-align: center;
+	&:hover {
+	  background: rgba(255, 255, 255, 0.1);
+	}
+  }
+  .menuItems {
+	flex-grow: 0;
+	}
+  .characterItems {
+	  flex-grow: 1;
+	  display: flex;
+	  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  }
+  .character {
+    margin: 0 0.5rem;
+	a {
+		padding: 1rem;
+	}
+    .name {
+      > span {
+        display: block;
+      }
+      .dragon {
+        font-size: 1.3em;
+        font-family: $headerFont;
+      }
+      .player {
+        color: #ddd;
+        text-transform: uppercase;
+        font-size: 0.8em;
+      }
+      .level {
+        color: #ccc;
+        font-size: 0.9em;
+      }
+    }
+    .stats {
+      > span {
+        padding: 0 0.5em;
+        color: #ccc;
+      }
+    }
+    
+  }
+}
+
+.campaignSelect {
+  padding: 2rem 0;
+  text-align: center;
+  form {
+    width: 450px;
+    margin: 1rem auto;
+  }
+}
+
+.characters {
+  padding: 1rem;
+
+  .character {
+    h2 {
+      text-align: center;
+      font-size: 3em;
+      span {
+        display: block;
+        font-size: 1rem;
+        color: #999;
+        line-height: 0.75rem;
+        font-family: $bodyFont;
+        text-transform: uppercase;
+      }
+    }
+    .attributes {
+      display: flex;
+	  justify-content: center;
+	  margin-bottom: 1rem;
+    }
+    .ant-badge {
+      width: 3.5em;
+      height: 3.5em;
+      margin: 0.5rem auto 0.75rem auto;
+      padding: 0 0 0 0;
+      background-color: #fafafa;
+      border: 2px solid #666;
+      box-shadow: 0 0 0 3px #fff, 0 0 0 6px #ddd,
+        3px 3px 9px 1px rgba(0, 0, 0, 0.15);
+      border-radius: 2rem;
+      text-align: center;
+      > span {
+        display: block;
+        font-size: 2em;
+        line-height: 1.5em;
+        font-family: $headerFont;
+      }
+      //   }
+    }
+    .level {
+      .ant-progress-steps-item {
+        background: #ccc;
+        width: 30px !important;
+        height: 30px !important;
+	  }
+	  .xp svg {
+		  margin-left: 1px;
+		  margin-right: 1px;
+	  }
+    }
+    .attribute {
+      flex-direction: right;
+      padding: 0.5rem;
+      > span {
+        display: block;
+      }
+	}
+	.moves {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+	}
+	.move {
+		// margin-bottom: 1rem;
+		margin: 0.5rem;
+		flex: 1 1 25%;
+		.ant-card-head-wrapper {
+			flex-wrap: wrap;
+			padding-top: 1rem;
+			padding-bottom: 1rem;
+		}
+		.ant-card-extra {
+			float: none;
+			margin-left: 0;
+			padding: 0;
+		}
+		.ant-card-head-title {
+			overflow: visible;
+			padding: 0;
+		}
+	}
+	.playbookMove {
+		background: #001529;
+		color: #fff;
+		.ant-card-head-title {
+			color: #fff;
+		}
+	}
+	.playbookSecondaryMove {
+		background: #304559;
+		color: #fff;
+		.ant-card-head-title {
+			color: #fff;
+		}
+	}
+	.playbookAltMove {
+		background: #666;
+		color: #fff;
+		.ant-card-head-title {
+			color: #fff;
+		}
+	}
+  }
+}
