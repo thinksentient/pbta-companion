@@ -26,7 +26,7 @@ export const HEADINGS = {
   CURRENT_CUNNING: "Current Cunning",
   CURRENT_MOONS: "Current Moons",
   CURRENT_SHADOWS: "Current Shadows",
-  CURRENT_TOMES: "Current Tomes",
+  CURRENT_TOMES: "Tomes",
   CHARM: "Charm",
   COURAGE: "Courage",
   CUNNING: "Cunning",
