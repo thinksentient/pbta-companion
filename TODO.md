@@ -2,6 +2,5 @@
 - moves for seer
 - moves for warrior
 - DM moves
-- footer details
 - documentation for the sample spreadsheet
 - discord oauth: https://medium.com/@orels1/using-discord-oauth2-a-simple-guide-and-an-example-nodejs-app-71a9e032770

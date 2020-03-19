@@ -21,6 +21,8 @@ To run your own game and for local developemnt copy the spreadsheet above and fi
 
 The app at the moment only supports Epyllion. I might explore other PBTAs in the future (PRs welcome).
 
+**Epyllion** Play as a dragon :) ROAR! [Epyllion Core Book](https://www.magpiegames.com/epyllion/)
+
 ## Installation
 
 Install dependencies

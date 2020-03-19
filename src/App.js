@@ -5,7 +5,8 @@ import { fetchData, HEADINGS as H, getCampaignKeyFromUrl } from "./data";
 import { Switch, Route, useLocation, useParams } from "react-router-dom";
 import { routes } from "./routes";
 import { Header } from "./components/Header";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGithub } from "@fortawesome/free-brands-svg-icons";
 // campaignKey is the long id in the sheets URL
 // https://docs.google.com/spreadsheets/d/CAMPAIGN_KEY
 
@@ -15,7 +16,7 @@ function App() {
 
   //	Hack around params not being parsed?
   if (!campaignKey) {
-	campaignKey = getCampaignKeyFromUrl(location.pathname);
+    campaignKey = getCampaignKeyFromUrl(location.pathname);
   }
 
   const [data, setData] = useState({
@@ -39,8 +40,8 @@ function App() {
         const newData = await fetchData(campaignKey);
         setData(newData);
       })();
-	  
-	  //	Every 3 minutes
+
+      //	Every 3 minutes
     }, 3 * 60 * 1000);
     return () => clearInterval(interval);
   }, [campaignKey]);
@@ -82,33 +83,32 @@ function App() {
                   key={index}
                   path={route.path}
                   exact={route.exact}
-                  children={<route.main characters={characters} config={config} />}
+                  children={
+                    <route.main characters={characters} config={config} />
+                  }
                 />
               ))}
             </Switch>
-
-            {/* <List
-              className="characters"
-              grid={{
-                gutter: 16,
-                s: 1,
-                sm: 2,
-                md: 3,
-                lg: 3,
-                xl: 6,
-                xxl: 8
-              }}
-              itemLayout="vertical"
-              dataSource={data.filter(c => !!c[H.DRAGON_NAME])}
-              renderItem={character => (
-                <List.Item key={H.NAME}>
-                  <Character data={character}>
-                    {character[H.DRAGON_NAME]}
-                  </Character>
-                </List.Item>
-              )}
-            /> */}
           </Layout.Content>
+          <Layout.Footer className="textCenter">
+            &copy; 2020 Joanna Walker |{" "}
+            <FontAwesomeIcon icon={faGithub} fixedWidth />{" "}
+            <a
+              href="https://github.com/thinksentient/pbta-companion"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              PBTA COmpanion on Github
+            </a>{" "}
+            |{" "}
+            <a
+              href="https://www.magpiegames.com/epyllion/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Epyllion
+            </a>
+          </Layout.Footer>
         </Layout>
       </Layout>
     </div>
