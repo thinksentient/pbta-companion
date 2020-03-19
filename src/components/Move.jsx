@@ -1,12 +1,19 @@
 import React, { useState } from "react";
-import { Form, Button, Card, Modal, Input, Switch } from "antd";
+import { Form, Button, Card, Modal, Input, Switch, notification } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGem, faDice } from "@fortawesome/free-solid-svg-icons";
 import Roll from "roll";
 
 const dice = new Roll();
 
-export const Move = ({ title, roll, name, webhook, privateWebhook, ...props }) => {
+export const Move = ({
+  title,
+  roll,
+  name,
+  webhook,
+  privateWebhook,
+  ...props
+}) => {
   const [form] = Form.useForm();
   const [showModal, setShowModal] = useState(false);
   const [privateChannel, setPrivateChannel] = useState(false);
@@ -39,7 +46,6 @@ export const Move = ({ title, roll, name, webhook, privateWebhook, ...props }) =
       } else {
         values = e;
       }
-      console.log("v", values, privateChannel, roll);
 
       let dicePattern = "2d6" + extraDice;
       if (roll.gem && values.gems) {
@@ -51,25 +57,43 @@ export const Move = ({ title, roll, name, webhook, privateWebhook, ...props }) =
         r = dice.roll(dicePattern);
       } catch (err) {
         console.error("Failed roll", err);
+        notification.error({
+          message: `Couldn't roll the dice :(`
+        });
         return setShowModal(false);
       }
 
       let message = JSON.stringify({
         content: `> ${name} tried to **${title}** (${dicePattern}).
 > And rolled... **${r.result}** (${r.rolled.join(", ")})`
-	  });
-	  console.log('webhooks', privateChannel, privateChannel ? privateWebhook : webhook);
+      });
 
-      fetch(
-        privateChannel ? privateWebhook : webhook,
-        {
-          method: "post",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: message
-        }
-      )
+      notification.error({
+        message: (
+          <span>
+            {title}
+            <br />
+            Rolled... <b>{r.result}</b> ({r.rolled.join(", ")})
+          </span>
+        ),
+        icon: <FontAwesomeIcon icon={faDice} size="x5" fixedWidth />,
+        duration: 0
+      });
+
+      const destinationWebhook = privateChannel ? privateWebhook : webhook;
+
+      //	If no webhook is set just return as normal
+      if (!destinationWebhook) {
+        return setShowModal(false);
+      }
+
+      fetch(destinationWebhook, {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: message
+      })
         .then(() => {
           return setShowModal(false);
         })
