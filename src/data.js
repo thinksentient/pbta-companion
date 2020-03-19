@@ -71,34 +71,6 @@ export const HEADINGS = {
   SHADOW_FEAR: "Shadow Fear"
 };
 
-// Set the configuration for your app
-// TODO: Replace with your project's config object
-//   var config = {
-// 	apiKey: "AIzaSyBJEFx11SDpC-m5ijUbNFOVoOfoJFvniXg",
-// 	authDomain: "pbta-manager.firebaseapp.com",
-// 	databaseURL: "https://pbta-manager.firebaseio.com",
-// 	projectId: "pbta-manager",
-// 	storageBucket: "pbta-manager.appspot.com",
-// 	messagingSenderId: "594005864510",
-// 	appId: "1:594005864510:web:352f31eef1a377a99ee16f"
-//   };
-//   firebase.initializeApp(config);
-
-//   // Get a reference to the database service
-//   var db = firebase.firestore();
-// var docRef = db.collection("playbooks").doc("SF");
-
-// docRef.get().then(function(doc) {
-//     if (doc.exists) {
-//         console.log("Document data:", doc.data());
-//     } else {
-//         // doc.data() will be undefined in this case
-//         console.log("No such document!");
-//     }
-// }).catch(function(error) {
-//     console.log("Error getting document:", error);
-// });
-
 const parse = require("csv-parse/lib/sync");
 
 export const getCampaignKeyFromUrl = pathname => {
