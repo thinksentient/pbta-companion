@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { HEADINGS as H, getCampaignKeyFromUrl } from "./../data";
-import { Row, Col, Badge, Button } from "antd";
+import { Row, Col, Badge, Button, Card } from "antd";
 import { useLocation, Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -8,7 +8,8 @@ import {
   faEye,
   faFistRaised,
   faSquare,
-  faCheckSquare
+  faCheckSquare,
+  faCloudMoon
 } from "@fortawesome/pro-solid-svg-icons";
 import moves from "./../data/moves";
 import { Move } from "./Move";
@@ -136,6 +137,13 @@ export const Character = ({ data, config }) => {
             cunning={[data[H.CUNNING], data[H.CURRENT_CUNNING]]}
           />
 
+          <CharacterShadows
+            anger={data[H.SHADOW_ANGER]}
+            doubt={data[H.SHADOW_DOUBT]}
+            fear={data[H.SHADOW_FEAR]}
+            shame={data[H.SHADOW_SHAME]}
+          />
+
           <h3>
             <span>
               {house.name}
@@ -228,7 +236,11 @@ export const Character = ({ data, config }) => {
               )
               //	Show base moves and chosen ones
               .filter(
-                m => !m.playbook || showAll || console.log(m.id) || selected.indexOf(m.id) !== -1
+                m =>
+                  !m.playbook ||
+                  showAll ||
+                  console.log(m.id) ||
+                  selected.indexOf(m.id) !== -1
               )
               .map(m => {
                 const moveExtra = selectedData[m.id] ?? [];
@@ -314,6 +326,112 @@ const CharacterAttributes = ({ charm, courage, cunning }) => {
         current={cunning[1]}
         extra={cunning[0]}
       />
+    </div>
+  );
+};
+
+const CharacterShadows = ({ anger, doubt, shame, fear }) => {
+  const [help, setHelp] = useState(null);
+  const gridStyle = {
+    width: "50%",
+    textAlign: "center"
+  };
+
+  console.log("///", help, !help);
+
+  return (
+    <div>
+      <h3>
+        <FontAwesomeIcon size="lg" icon={faCloudMoon} /> Shadows
+      </h3>
+
+      <Card style={{ marginBottom: "1rem" }}>
+        <Card.Grid
+          style={{
+            ...gridStyle,
+            backgroundColor: help === "anger" ? "#ccc" : null
+          }}
+          onClick={() => setHelp(help !== "anger" ? "anger" : null)}
+        >
+          <FontAwesomeIcon
+            size="lg"
+            icon={anger === 1 ? faCheckSquare : faSquare}
+          />{" "}
+          <span>Anger</span>
+        </Card.Grid>
+        <Card.Grid
+          style={{
+            ...gridStyle,
+            backgroundColor: help === "shame" ? "#ccc" : null
+          }}
+          onClick={() => setHelp(help !== "shame" ? "shame" : null)}
+        >
+          <FontAwesomeIcon
+            size="lg"
+            icon={shame === 1 ? faCheckSquare : faSquare}
+          />{" "}
+          <span>Shame</span>
+        </Card.Grid>
+        <Card.Grid
+          style={{
+            ...gridStyle,
+            backgroundColor: help === "doubt" ? "#ccc" : null
+          }}
+          onClick={() => setHelp(help !== "doubt" ? "doubt" : null)}
+        >
+          <FontAwesomeIcon
+            size="lg"
+            icon={doubt === 1 ? faCheckSquare : faSquare}
+          />{" "}
+          <span>Doubt</span>
+        </Card.Grid>
+        <Card.Grid
+          style={{
+            ...gridStyle,
+            backgroundColor: help === "fear" ? "#ccc" : null
+          }}
+          onClick={() => setHelp(help !== "fear" ? "fear" : null)}
+        >
+          <FontAwesomeIcon
+            size="lg"
+            icon={fear === 1 ? faCheckSquare : faSquare}
+          />{" "}
+          <span>Fear</span>
+        </Card.Grid>
+      </Card>
+
+      {help && <p>Consequences:</p>}
+      {help === "anger" && (
+        <ul>
+          <li>Lash out at a friend.</li>
+          <li>Break something valuable</li>
+          <li>Escalate a delicate situation</li>
+        </ul>
+      )}
+
+      {help === "shame" && (
+        <ul>
+          <li>Blame a friend for your mistakes</li>
+          <li>Mock or belittle someone vulnerable</li>
+          <li>Seek isolation or solitude</li>
+        </ul>
+      )}
+
+      {help === "doubt" && (
+        <ul>
+          <li>Question a friend’s loyalty</li>
+          <li>Steal something valuable</li>
+          <li>Reject a tradition of Dragonia</li>
+        </ul>
+      )}
+
+      {help === "fear" && (
+        <ul>
+          <li>Hide something from your friends</li>
+          <li>Avoid a difficult task</li>
+          <li>Exaggerate the danger of the situation</li>
+        </ul>
+      )}
     </div>
   );
 };
