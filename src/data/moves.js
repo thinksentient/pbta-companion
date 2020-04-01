@@ -232,7 +232,7 @@ export const epyllionAcademicMoves = [
     title: "Old Debts",
     description: `When you stand up to an older dragon by reminding them of
 		debts and obligations long forgotten, roll +Cunning instead of +Courage.`,
-    rolls: { stat: epyllionStats["epyllion/cunning"] },
+    roll: { stat: epyllionStats["epyllion/cunning"] },
     playbook: "epyllion/academic"
   },
   {
@@ -276,7 +276,7 @@ export const epyllionAcademicMoves = [
 		<li>How are you vulnerable to the Darkness?</li>
 		<li>Who in Dragonia opposes your goals and machinations?</li>
 		</ul>`,
-    rolls: { stat: epyllionStats["epyllion/charm"] },
+    roll: { stat: epyllionStats["epyllion/charm"] },
     playbook: "epyllion/academic"
   }
 ];
