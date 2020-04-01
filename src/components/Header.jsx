@@ -22,16 +22,17 @@ export const Header = ({ characters = [] }) => {
     <Layout.Header>
       <div className="menuItems">
         <Link to="/">Home</Link>
-        <Link to={"/"+campaignKey}>Campaign</Link>
+        <Link to={"/" + campaignKey}>Campaign</Link>
+        <Link to={"/" + campaignKey + "/GM"}>GM Info</Link>
       </div>
-	  <div className="characterItems">
-      {characters.map(character => (
-        <HeaderCharacter
-          character={character}
-          key={character[H.CHARACTER_NAME] + "_" + character[H.NAME]}
-        />
-      ))}
-	  </div>
+      <div className="characterItems">
+        {characters.map(character => (
+          <HeaderCharacter
+            character={character}
+            key={character[H.CHARACTER_NAME] + "_" + character[H.NAME]}
+          />
+        ))}
+      </div>
     </Layout.Header>
   );
 };

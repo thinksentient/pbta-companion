@@ -58,10 +58,14 @@ h3 {
 }
 
 .ant-card-head {
-	padding: 0 1rem;
+  padding: 0 1rem;
 }
 .ant-card-body {
-	padding: 1rem;
+  padding: 1rem;
+}
+.ant-card.activeCard {
+  background: #666;
+  color: #fff;
 }
 
 .ant-layout-header {
@@ -76,29 +80,29 @@ h3 {
     color: #fff;
   }
   a {
-	display: block;
-	padding: 0.5rem;
-	border-radius: 15px;
-	text-align: center;
-	&:hover {
-	  background: rgba(255, 255, 255, 0.1);
-	}
+    display: block;
+    padding: 0.5rem;
+    border-radius: 15px;
+    text-align: center;
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
   }
   .menuItems {
-	flex-grow: 0;
-	}
+    flex-grow: 0;
+  }
   .characterItems {
-	  flex-grow: 1;
-	  display: flex;
-	  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
   }
   .character {
     margin: 0 0.5rem;
-	a {
-		padding: 1rem;
-	}
+    a {
+      padding: 1rem;
+    }
     .name {
       > span {
         display: block;
@@ -123,7 +127,6 @@ h3 {
         color: #ccc;
       }
     }
-    
   }
 }
 
@@ -154,8 +157,8 @@ h3 {
     }
     .attributes {
       display: flex;
-	  justify-content: center;
-	  margin-bottom: 1rem;
+      justify-content: center;
+      margin-bottom: 1rem;
     }
     .ant-badge {
       width: 3.5em;
@@ -181,11 +184,11 @@ h3 {
         background: #ccc;
         width: 30px !important;
         height: 30px !important;
-	  }
-	  .xp svg {
-		  margin-left: 1px;
-		  margin-right: 1px;
-	  }
+      }
+      .xp svg {
+        margin-left: 1px;
+        margin-right: 1px;
+      }
     }
     .attribute {
       flex-direction: right;
@@ -193,51 +196,51 @@ h3 {
       > span {
         display: block;
       }
-	}
-	.moves {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: space-between;
-	}
-	.move {
-		// margin-bottom: 1rem;
-		margin: 0.5rem;
-		flex: 1 1 25%;
-		.ant-card-head-wrapper {
-			flex-wrap: wrap;
-			padding-top: 1rem;
-			padding-bottom: 1rem;
-		}
-		.ant-card-extra {
-			float: none;
-			margin-left: 0;
-			padding: 0;
-		}
-		.ant-card-head-title {
-			overflow: visible;
-			padding: 0;
-		}
-	}
-	.playbookMove {
-		background: #001529;
-		color: #fff;
-		.ant-card-head-title {
-			color: #fff;
-		}
-	}
-	.playbookSecondaryMove {
-		background: #304559;
-		color: #fff;
-		.ant-card-head-title {
-			color: #fff;
-		}
-	}
-	.playbookAltMove {
-		background: #666;
-		color: #fff;
-		.ant-card-head-title {
-			color: #fff;
-		}
-	}
+    }
+    .moves {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+    .move {
+      // margin-bottom: 1rem;
+      margin: 0.5rem;
+      flex: 1 1 25%;
+      .ant-card-head-wrapper {
+        flex-wrap: wrap;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+      }
+      .ant-card-extra {
+        float: none;
+        margin-left: 0;
+        padding: 0;
+      }
+      .ant-card-head-title {
+        overflow: visible;
+        padding: 0;
+      }
+    }
+    .playbookMove {
+      background: #001529;
+      color: #fff;
+      .ant-card-head-title {
+        color: #fff;
+      }
+    }
+    .playbookSecondaryMove {
+      background: #304559;
+      color: #fff;
+      .ant-card-head-title {
+        color: #fff;
+      }
+    }
+    .playbookAltMove {
+      background: #666;
+      color: #fff;
+      .ant-card-head-title {
+        color: #fff;
+      }
+    }
   }
 }
