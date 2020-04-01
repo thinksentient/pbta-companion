@@ -1,5 +1,6 @@
 import { epyllionPlaybooks } from "./data/playbooks";
 import { getSystemConfig } from "./data/system";
+import { notification } from "antd";
 // Firebase App (the core Firebase SDK) is always required and
 // must be listed before other Firebase SDKs
 // import * as firebase from "firebase/app";
@@ -88,11 +89,24 @@ export const fetchData = async campaignKey => {
   if (!campaignKey) {
     return defaultData;
   }
-  const csvResponse = await fetch(
-    "https://docs.google.com/spreadsheets/d/" +
-      campaignKey +
-      "/export?format=csv"
-  );
+
+  let csvResponse;
+
+  try {
+    csvResponse = await fetch(
+      "https://docs.google.com/spreadsheets/d/" +
+        campaignKey +
+        "/export?format=csv"
+    );
+  } catch (err) {
+    console.error("FETCH CSV ERROR", err);
+    notification.error({
+      message:
+        "Unable to access the spreadsheet. Check spreadsheet exists and read permissions are granted.",
+      duration: 0
+    });
+    return defaultData;
+  }
 
   //	Split character data from general config
   const csv = await (await csvResponse.text()).split("---");
@@ -114,7 +128,11 @@ export const fetchData = async campaignKey => {
       skip_empty_lines: true
     });
   } catch (err) {
-    console.error("Couldn't parse CSV", err);
+    console.error("PARSE CSV ERROR", err);
+    notification.error({
+      message: "There was an error while parsing the spreadsheet.",
+      duration: 0
+    });
     return defaultData;
   }
 
@@ -126,21 +144,24 @@ export const fetchData = async campaignKey => {
 
   let system;
 
-  const hasData =
-    characterData && Array.isArray(characterData) && characterData[0];
+  const hasData = characterData && Array.isArray(characterData);
 
   if (!hasData) {
-    throw new Error(
-      "Spreadsheet has to have at least one row with at least the System field filled in"
-    );
+    notification.error({
+      message:
+        'The spreadsheet has to have at minimum: the System field filled in and a "---" divider line.',
+      duration: 0
+    });
+    return defaultData;
   }
 
-  system = config[HEADINGS.SYSTEM] = getSystemConfig(String(config[HEADINGS.SYSTEM]).toLowerCase());
+  system = config[HEADINGS.SYSTEM] = getSystemConfig(
+    String(config[HEADINGS.SYSTEM]).toLowerCase()
+  );
 
   //	Cleanup
   characterData.forEach(d => {
-	
-	//	Convert playbook to full playbook ID
+    //	Convert playbook to full playbook ID
     d[HEADINGS.PLAYBOOOK] =
       system.id +
       "/" +
@@ -150,16 +171,16 @@ export const fetchData = async campaignKey => {
         .replace("/[^0-9a-z]/");
     const playbook = epyllionPlaybooks[d[HEADINGS.PLAYBOOOK]];
 
-	d[HEADINGS.HOUSE] = system.id + '/' + d[HEADINGS.HOUSE].trim().toLowerCase();
+    d[HEADINGS.HOUSE] =
+      system.id + "/" + d[HEADINGS.HOUSE].trim().toLowerCase();
     d[HEADINGS.XP] = parseInt(d[HEADINGS.XP], 10);
     d[HEADINGS.LEVEL] = parseInt(d[HEADINGS.LEVEL], 10);
 
     //	Base Stats
-	//	@todo: these should be automatic based on the system,
-	//	not hardcoded for Epyllion
+    //	@todo: these should be automatic based on the system,
+    //	not hardcoded for Epyllion
     d[HEADINGS.CURRENT_CHARM] =
-      playbook.baseStats["epyllion/charm"] +
-      parseInt(d[HEADINGS.CHARM], 10);
+      playbook.baseStats["epyllion/charm"] + parseInt(d[HEADINGS.CHARM], 10);
     d[HEADINGS.CURRENT_COURAGE] =
       playbook.baseStats["epyllion/courage"] +
       parseInt(d[HEADINGS.COURAGE], 10);
@@ -167,38 +188,38 @@ export const fetchData = async campaignKey => {
       playbook.baseStats["epyllion/cunning"] +
       parseInt(d[HEADINGS.CUNNING], 10);
 
-	d[HEADINGS.CURRENT_SHADOWS] = 0;
-	d[HEADINGS.SHADOW_ANGER] = parseInt(d[HEADINGS.SHADOW_ANGER], 10);
-	d[HEADINGS.SHADOW_DOUBT] = parseInt(d[HEADINGS.SHADOW_DOUBT], 10);
-	d[HEADINGS.SHADOW_SHAME] = parseInt(d[HEADINGS.SHADOW_SHAME], 10);
-	d[HEADINGS.SHADOW_FEAR] = parseInt(d[HEADINGS.SHADOW_FEAR], 10);
+    d[HEADINGS.CURRENT_SHADOWS] = 0;
+    d[HEADINGS.SHADOW_ANGER] = parseInt(d[HEADINGS.SHADOW_ANGER], 10);
+    d[HEADINGS.SHADOW_DOUBT] = parseInt(d[HEADINGS.SHADOW_DOUBT], 10);
+    d[HEADINGS.SHADOW_SHAME] = parseInt(d[HEADINGS.SHADOW_SHAME], 10);
+    d[HEADINGS.SHADOW_FEAR] = parseInt(d[HEADINGS.SHADOW_FEAR], 10);
 
-	if(d[HEADINGS.SHADOW_ANGER]){
-		d[HEADINGS.CURRENT_SHADOWS] += 1;
-	}
-	if(d[HEADINGS.SHADOW_DOUBT]){
-		d[HEADINGS.CURRENT_SHADOWS] += 1;
-	}
-	if(d[HEADINGS.SHADOW_SHAME]){
-		d[HEADINGS.CURRENT_SHADOWS] += 1;
-	}
-	if(d[HEADINGS.SHADOW_FEAR]){
-		d[HEADINGS.CURRENT_SHADOWS] += 1;
-	}
+    if (d[HEADINGS.SHADOW_ANGER]) {
+      d[HEADINGS.CURRENT_SHADOWS] += 1;
+    }
+    if (d[HEADINGS.SHADOW_DOUBT]) {
+      d[HEADINGS.CURRENT_SHADOWS] += 1;
+    }
+    if (d[HEADINGS.SHADOW_SHAME]) {
+      d[HEADINGS.CURRENT_SHADOWS] += 1;
+    }
+    if (d[HEADINGS.SHADOW_FEAR]) {
+      d[HEADINGS.CURRENT_SHADOWS] += 1;
+    }
 
-	d[HEADINGS.CURRENT_MOONS] = 0;
+    d[HEADINGS.CURRENT_MOONS] = 0;
 
-	if(d[HEADINGS.LEVEL] > 2){
-		d[HEADINGS.CURRENT_MOONS] += 1;
-	} 
-	if(d[HEADINGS.LEVEL] > 3){
-		d[HEADINGS.CURRENT_MOONS] += 1;
-	} 
-	if(d[HEADINGS.LEVEL] > 4){
-		d[HEADINGS.CURRENT_MOONS] += 1;
-	} 
-	
-	d[HEADINGS.CURRENT_TOMES] = parseInt(d[HEADINGS.CURRENT_TOMES], 10);
+    if (d[HEADINGS.LEVEL] > 2) {
+      d[HEADINGS.CURRENT_MOONS] += 1;
+    }
+    if (d[HEADINGS.LEVEL] > 3) {
+      d[HEADINGS.CURRENT_MOONS] += 1;
+    }
+    if (d[HEADINGS.LEVEL] > 4) {
+      d[HEADINGS.CURRENT_MOONS] += 1;
+    }
+
+    d[HEADINGS.CURRENT_TOMES] = parseInt(d[HEADINGS.CURRENT_TOMES], 10);
 
     d[HEADINGS.PLAYBOOK_BASE_MOVE] = String(
       d[HEADINGS.PLAYBOOK_BASE_MOVE]

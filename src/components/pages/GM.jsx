@@ -1,7 +1,5 @@
 import React from "react";
-import { HEADINGS } from "../../data";
 import { Card, Col, Row, Button } from "antd";
-import { faSimplybuilt } from "@fortawesome/free-brands-svg-icons";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDice } from "@fortawesome/pro-solid-svg-icons";
