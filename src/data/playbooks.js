@@ -37,7 +37,7 @@ export const epyllionPlaybooks = {
 	description: `YOU UNDERSTAND THAT beauty goes beyond a flashy new look, and you know how much hard work and dedication it takes to make great art. But it is important for all great crafters to remember that your trade is a dangerous practice: many like you have fallen to their obsessions. Your friendships will keep you grounded while you pursue perfection.`,
 	fellowships: [
 		'CHARACTER asked you to craft something useful for your Clutch (+Gem)',
-		'CHARACTER inspired you to leave your workshop to fight against the Darkness(-Gem)',
+		'CHARACTER inspired you to leave your workshop to fight against the Darkness (-Gem)',
 		'CHARACTER has your back when your tinkering gets you into trouble (-Gem)',
 	]
   },
