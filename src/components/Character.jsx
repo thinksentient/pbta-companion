@@ -9,7 +9,7 @@ import {
   faFistRaised,
   faSquare,
   faCheckSquare,
-  faCloudMoon
+  faCloudMoon,
 } from "@fortawesome/pro-solid-svg-icons";
 import moves from "./../data/moves";
 import { Move } from "./Move";
@@ -38,7 +38,7 @@ export const HeaderCharacter = ({ character }) => {
             encodeURI(character[H.NAME]) +
             "/" +
             encodeURI(character[H.CHARACTER_NAME]) +
-            "/"
+            "/",
         }}
       >
         <div className="name">
@@ -94,13 +94,13 @@ export const Character = ({ data, config }) => {
     data[H.PLAYBOOK_BASE_MOVE][0],
     data[H.PLAYBOOK_MOVE_1][0],
     data[H.PLAYBOOK_MOVE_2][0],
-    data[H.PLAYBOOK_MOVE_3][0]
+    data[H.PLAYBOOK_MOVE_3][0],
   ];
   const selectedData = {
     [data[H.PLAYBOOK_BASE_MOVE][0]]: data[H.PLAYBOOK_BASE_MOVE],
     [data[H.PLAYBOOK_MOVE_1][0]]: data[H.PLAYBOOK_MOVE_1],
     [data[H.PLAYBOOK_MOVE_2][0]]: data[H.PLAYBOOK_MOVE_2],
-    [data[H.PLAYBOOK_MOVE_3][0]]: data[H.PLAYBOOK_MOVE_3]
+    [data[H.PLAYBOOK_MOVE_3][0]]: data[H.PLAYBOOK_MOVE_3],
   };
 
   console.log(selected);
@@ -204,6 +204,15 @@ export const Character = ({ data, config }) => {
               <span>{data[H.FEET]}</span>, <span>{data[H.PHYSIQUE]}</span>.
             </p>
           )}
+
+          <h3>Fellowships</h3>
+
+		  {data[H.FELLOWSHIP_1] && <p>{playbook.fellowships[0].replace('CHARACTER', data[H.FELLOWSHIP_1])}</p>}
+
+		  {data[H.FELLOWSHIP_2] && <p>{playbook.fellowships[1].replace('CHARACTER', data[H.FELLOWSHIP_2])}</p>}
+
+		  {data[H.FELLOWSHIP_3] && <p>{playbook.fellowships[2].replace('CHARACTER', data[H.FELLOWSHIP_3])}</p>}
+
         </Col>
         <Col
           xs={{ span: 24 }}
@@ -232,17 +241,17 @@ export const Character = ({ data, config }) => {
             {moves
               //	hide DM moves
               .filter(
-                m => !m.playbook || (m.playbook && !m.playbook.match(/\/DM$/))
+                (m) => !m.playbook || (m.playbook && !m.playbook.match(/\/DM$/))
               )
               //	Show base moves and chosen ones
               .filter(
-                m =>
+                (m) =>
                   !m.playbook ||
                   showAll ||
                   console.log(m.id) ||
                   selected.indexOf(m.id) !== -1
               )
-              .map(m => {
+              .map((m) => {
                 const moveExtra = selectedData[m.id] ?? [];
                 const description =
                   typeof m.description === "function"
@@ -265,12 +274,12 @@ export const Character = ({ data, config }) => {
                         m.roll &&
                         m.roll.stat &&
                         data[H["CURRENT_" + m.roll.stat.name.toUpperCase()]],
-                      ...m.roll
+                      ...m.roll,
                     }}
                   >
                     <div
                       dangerouslySetInnerHTML={{
-                        __html: description
+                        __html: description,
                       }}
                     ></div>
                   </Move>
@@ -334,7 +343,7 @@ const CharacterShadows = ({ anger, doubt, shame, fear }) => {
   const [help, setHelp] = useState(null);
   const gridStyle = {
     width: "50%",
-    textAlign: "center"
+    textAlign: "center",
   };
 
   console.log("///", help, !help);
@@ -349,7 +358,7 @@ const CharacterShadows = ({ anger, doubt, shame, fear }) => {
         <Card.Grid
           style={{
             ...gridStyle,
-            backgroundColor: help === "anger" ? "#ccc" : null
+            backgroundColor: help === "anger" ? "#ccc" : null,
           }}
           onClick={() => setHelp(help !== "anger" ? "anger" : null)}
         >
@@ -362,7 +371,7 @@ const CharacterShadows = ({ anger, doubt, shame, fear }) => {
         <Card.Grid
           style={{
             ...gridStyle,
-            backgroundColor: help === "shame" ? "#ccc" : null
+            backgroundColor: help === "shame" ? "#ccc" : null,
           }}
           onClick={() => setHelp(help !== "shame" ? "shame" : null)}
         >
@@ -375,7 +384,7 @@ const CharacterShadows = ({ anger, doubt, shame, fear }) => {
         <Card.Grid
           style={{
             ...gridStyle,
-            backgroundColor: help === "doubt" ? "#ccc" : null
+            backgroundColor: help === "doubt" ? "#ccc" : null,
           }}
           onClick={() => setHelp(help !== "doubt" ? "doubt" : null)}
         >
@@ -388,7 +397,7 @@ const CharacterShadows = ({ anger, doubt, shame, fear }) => {
         <Card.Grid
           style={{
             ...gridStyle,
-            backgroundColor: help === "fear" ? "#ccc" : null
+            backgroundColor: help === "fear" ? "#ccc" : null,
           }}
           onClick={() => setHelp(help !== "fear" ? "fear" : null)}
         >

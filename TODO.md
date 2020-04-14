@@ -1,10 +1,7 @@
 # ToDo Notes
-
-- Shadows:
-  - show shadow track
+- move these to github issues
 - add moves for seer
 - add moves for warrior
-- add DM moves
 - Gems:
   - define gems format
   - show current gems
