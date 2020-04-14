@@ -12,6 +12,7 @@ export const Move = ({
   name,
   webhook,
   privateWebhook,
+  gems,
   ...props
 }) => {
   const [form] = Form.useForm();
@@ -136,7 +137,12 @@ export const Move = ({
               Private roll?
             </Form.Item>
             {roll.gem && (
-              <Form.Item label="Gems" name="gems">
+              <Form.Item label="Gems" name="gems" extra={Object.keys(gems).map((k) => (
+				<span key={k}>
+				  {k}: {gems[k]} &nbsp;
+				</span>
+			  ))}>
+
                 <Input type="text" />
               </Form.Item>
             )}

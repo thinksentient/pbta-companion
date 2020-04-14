@@ -1,6 +1,6 @@
 {
   "name": "epyllion-character-manager",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-pro": "^5.12.1",

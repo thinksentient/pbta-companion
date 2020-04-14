@@ -10,6 +10,7 @@ import {
   faSquare,
   faCheckSquare,
   faCloudMoon,
+  faGem,
 } from "@fortawesome/pro-solid-svg-icons";
 import moves from "./../data/moves";
 import { Move } from "./Move";
@@ -137,6 +138,17 @@ export const Character = ({ data, config }) => {
             cunning={[data[H.CUNNING], data[H.CURRENT_CUNNING]]}
           />
 
+          <h3>
+            <FontAwesomeIcon icon={faGem} />
+            &nbsp;Gems
+          </h3>
+
+          {Object.keys(data[H.GEMS]).map((k) => (
+            <p className="textCenter">
+              {k}: {data[H.GEMS][k]}
+            </p>
+          ))}
+
           <CharacterShadows
             anger={data[H.SHADOW_ANGER]}
             doubt={data[H.SHADOW_DOUBT]}
@@ -207,12 +219,32 @@ export const Character = ({ data, config }) => {
 
           <h3>Fellowships</h3>
 
-		  {data[H.FELLOWSHIP_1] && <p>{playbook.fellowships[0].replace('CHARACTER', data[H.FELLOWSHIP_1])}</p>}
+          {data[H.FELLOWSHIP_1] && (
+            <p>
+              {playbook.fellowships[0].replace(
+                "CHARACTER",
+                data[H.FELLOWSHIP_1]
+              )}
+            </p>
+          )}
 
-		  {data[H.FELLOWSHIP_2] && <p>{playbook.fellowships[1].replace('CHARACTER', data[H.FELLOWSHIP_2])}</p>}
+          {data[H.FELLOWSHIP_2] && (
+            <p>
+              {playbook.fellowships[1].replace(
+                "CHARACTER",
+                data[H.FELLOWSHIP_2]
+              )}
+            </p>
+          )}
 
-		  {data[H.FELLOWSHIP_3] && <p>{playbook.fellowships[2].replace('CHARACTER', data[H.FELLOWSHIP_3])}</p>}
-
+          {data[H.FELLOWSHIP_3] && (
+            <p>
+              {playbook.fellowships[2].replace(
+                "CHARACTER",
+                data[H.FELLOWSHIP_3]
+              )}
+            </p>
+          )}
         </Col>
         <Col
           xs={{ span: 24 }}
@@ -263,7 +295,8 @@ export const Character = ({ data, config }) => {
                     title={m.title}
                     name={data[H.CHARACTER_NAME]}
                     privateWebhook={data[H.DISCORD_PRIVATE_WEBHOOK]}
-                    webhook={config[H.DISCORD_WEBHOOK]}
+					webhook={config[H.DISCORD_WEBHOOK]}
+					gems={data[H.GEMS]}
                     className={
                       "move" +
                       (m.primary ? " playbookMove" : "") +

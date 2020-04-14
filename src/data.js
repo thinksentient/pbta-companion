@@ -207,6 +207,14 @@ export const fetchData = async campaignKey => {
       d[HEADINGS.CURRENT_SHADOWS] += 1;
     }
 
+	//	Convert to a count
+	const gems = String(d[HEADINGS.GEMS]).split(',');
+	const gemList = {};
+	gems.forEach(k => {
+		gemList[k] = gemList[k] ? gemList[k] + 1 : 1;
+	})
+	d[HEADINGS.GEMS] = gemList;
+
     d[HEADINGS.CURRENT_MOONS] = 0;
 
     if (d[HEADINGS.LEVEL] > 2) {
