@@ -10,7 +10,7 @@ export const CampaignSelect = () => {
   }, []);
 
   const onFinish = values => {
-	window.location.href = "#/" + values.gdocid;
+	window.location.href = "#/" + encodeURIComponent(values.gdocid);
 	
 	// let x = JSON.stringify({content: 'abc'});
 	// fetch('https://discordapp.com/api/webhooks/685286083554050126/4UgyicABfpN2LKBeLzbziz9gvlRuPtWtTb9MZOpKwO3Dg68tP2Czi352PQx4D-VLs1PE', {

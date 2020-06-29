@@ -69,21 +69,21 @@ export const HEADINGS = {
   SHADOW_ANGER: "Shadow Anger",
   SHADOW_DOUBT: "Shadow Doubt",
   SHADOW_SHAME: "Shadow Shame",
-  SHADOW_FEAR: "Shadow Fear"
+  SHADOW_FEAR: "Shadow Fear",
 };
 
 const parse = require("csv-parse/lib/sync");
 
-export const getCampaignKeyFromUrl = pathname => {
+export const getCampaignKeyFromUrl = (pathname) => {
   const match = pathname.match(/^\/([a-z0-9-]+)/i);
   return match && match[1];
 };
 
-export const fetchData = async campaignKey => {
+export const fetchData = async (campaignKey) => {
   const defaultData = {
     system: null,
     characters: [],
-    config: {}
+    config: {},
   };
 
   if (!campaignKey) {
@@ -94,7 +94,8 @@ export const fetchData = async campaignKey => {
 
   try {
     csvResponse = await fetch(
-      "https://docs.google.com/spreadsheets/d/" +
+      "https://cors-anywhere.herokuapp.com/" +
+        "https://spreadsheets.google.com/spreadsheets/d/" +
         campaignKey +
         "/export?format=csv"
     );
@@ -103,7 +104,7 @@ export const fetchData = async campaignKey => {
     notification.error({
       message:
         "Unable to access the spreadsheet. Check spreadsheet exists and read permissions are granted.",
-      duration: 0
+      duration: 0,
     });
     return defaultData;
   }
@@ -120,23 +121,23 @@ export const fetchData = async campaignKey => {
       trim: true,
       skip_empty_lines: true,
       relax_column_count: true,
-      skip_lines_with_empty_values: true
+      skip_lines_with_empty_values: true,
     });
 
     characterData = await parse(csv[1], {
       columns: true,
-      skip_empty_lines: true
+      skip_empty_lines: true,
     });
   } catch (err) {
     console.error("PARSE CSV ERROR", err);
     notification.error({
       message: "There was an error while parsing the spreadsheet.",
-      duration: 0
+      duration: 0,
     });
     return defaultData;
   }
 
-  campaignData.forEach(item => {
+  campaignData.forEach((item) => {
     config[item[0]] = item[2];
   });
 
@@ -150,7 +151,7 @@ export const fetchData = async campaignKey => {
     notification.error({
       message:
         'The spreadsheet has to have at minimum: the System field filled in and a "---" divider line.',
-      duration: 0
+      duration: 0,
     });
     return defaultData;
   }
@@ -160,7 +161,7 @@ export const fetchData = async campaignKey => {
   );
 
   //	Cleanup
-  characterData.forEach(d => {
+  characterData.forEach((d) => {
     //	Convert playbook to full playbook ID
     d[HEADINGS.PLAYBOOOK] =
       system.id +
@@ -207,13 +208,13 @@ export const fetchData = async campaignKey => {
       d[HEADINGS.CURRENT_SHADOWS] += 1;
     }
 
-	//	Convert to a count
-	const gems = String(d[HEADINGS.GEMS]).split(',');
-	const gemList = {};
-	gems.forEach(k => {
-		gemList[k] = gemList[k] ? gemList[k] + 1 : 1;
-	})
-	d[HEADINGS.GEMS] = gemList;
+    //	Convert to a count
+    const gems = String(d[HEADINGS.GEMS]).split(",");
+    const gemList = {};
+    gems.forEach((k) => {
+      gemList[k] = gemList[k] ? gemList[k] + 1 : 1;
+    });
+    d[HEADINGS.GEMS] = gemList;
 
     d[HEADINGS.CURRENT_MOONS] = 0;
 
@@ -262,6 +263,6 @@ export const fetchData = async campaignKey => {
   return {
     ...defaultData,
     config: config,
-    characters: characterData
+    characters: characterData,
   };
 };
